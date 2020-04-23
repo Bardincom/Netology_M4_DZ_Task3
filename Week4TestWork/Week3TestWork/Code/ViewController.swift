@@ -75,21 +75,19 @@ class ViewController: UIViewController {
         
         
         for operation in allOperation {
-//            operation.qualityOfService = .userInitiated
+            
             operation.completionBlock = {
+        
                 if let result = operation.result {
+                    print(result)
                     operationQueue.cancelAllOperations()
                     OperationQueue.main.addOperation {
                         self.stop(password: result, startTime: startTime)
                     }
-                } else if operation.isFinished == false {
-                    OperationQueue.main.addOperation {
-                        self.stop(password: "Error", startTime: startTime)
-                    }
-                }
+                } 
             }
         }
-    }
+}
     
     //Обновляем UI
     private func stop(password: String, startTime: Date) {
