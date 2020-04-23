@@ -68,6 +68,7 @@ class BruteForceOperations: Operation {
             // Выходим из цикла если пароль найден, или, если дошли до конца массива индексов
             if inputPassword == currentPass {
                 result = currentPass
+//                cancel()
             } else {
                 if currentIndexArray.elementsEqual(endIndexArray) {
                     break

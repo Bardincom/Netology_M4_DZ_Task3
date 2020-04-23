@@ -84,7 +84,12 @@ class ViewController: UIViewController {
                     OperationQueue.main.addOperation {
                         self.stop(password: result, startTime: startTime)
                     }
-                } 
+                } else if operation.isCancelled == false {
+                    operationQueue.cancelAllOperations()
+                    OperationQueue.main.addOperation {
+                        self.stop(password: "Error", startTime: startTime)
+                    }
+                }
             }
         }
 }
