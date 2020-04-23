@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     private let passwordGenerate = PasswordGenerator()
     private let characterArray = Consts.characterArray
     private let maxTextLength = Consts.maxTextFieldTextLength
-    private var password = ""
+    public var password = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,68 +58,37 @@ class ViewController: UIViewController {
     }
     
     private func start() {
-        /// создаем очередь
-        let queue = DispatchQueue.global(qos: .userInitiated)
-        queue.async {
-            let startTime = Date()
-            let result = self.bruteForce(startString: "0000", endString: "ZZZZ")
-            /// обновляем UI в главном потоке
-            DispatchQueue.main.async {
-                self.stop(password: result ?? "Error", startTime: startTime)
-            }
-            
-        }
-    }
-    
-    // Возвращает подобранный пароль
-    private func bruteForce(startString: String, endString: String) -> String? {
-        let inputPassword = password
-        var startIndexArray = [Int]()
-        var endIndexArray = [Int]()
-        let maxIndexArray = characterArray.count
+        let startTime = Date()
+        let operationQueue = OperationQueue()
         
-        // Создает массивы индексов из входных строк
-        for char in startString {
-            for (index, value) in characterArray.enumerated() where value == "\(char)" {
-                startIndexArray.append(index)
-            }
-        }
-        for char in endString {
-            for (index, value) in characterArray.enumerated() where value == "\(char)" {
-                endIndexArray.append(index)
-            }
-        }
+        let firstOperation = BruteForceOperations(startString: "0000", endString: "eeee", password: password)
+        firstOperation.name = "FirstOperation"
+        let secondOperation = BruteForceOperations(startString: "ffff", endString: "tttt", password: password)
+        secondOperation.name = "SecondOperation"
+        let thirtOperation = BruteForceOperations(startString: "uuuu", endString: "IIII", password: password)
+        thirtOperation.name = "ThirtOperation"
+        let fourthOperation = BruteForceOperations(startString: "JJJJ", endString: "ZZZZ", password: password)
+        fourthOperation.name = "FourthOperation"
         
-        var currentIndexArray = startIndexArray
+        let allOperation = [firstOperation, secondOperation, thirtOperation, fourthOperation]
+        operationQueue.addOperations(allOperation, waitUntilFinished: false)
         
-        // Цикл подбора пароля
-        while true {
-            
-            // Формируем строку проверки пароля из элементов массива символов
-            let currentPass = self.characterArray[currentIndexArray[0]] + self.characterArray[currentIndexArray[1]] + self.characterArray[currentIndexArray[2]] + self.characterArray[currentIndexArray[3]]
-            
-            // Выходим из цикла если пароль найден, или, если дошли до конца массива индексов
-            if inputPassword == currentPass {
-                return currentPass
-            } else {
-                if currentIndexArray.elementsEqual(endIndexArray) {
-                    break
-                }
-                
-                // Если пароль не найден, то происходит увеличение индекса. Для этого в цикле, начиная с последнего элемента осуществляется проверка текущего значения. Если оно меньше максимального значения (61), то индекс просто увеличивается на 1.
-                //Например было [0, 0, 0, 5] а станет [0, 0, 0, 6]. Если же мы уже проверили последний индекс, например [0, 0, 0, 61], то нужно сбросить его в 0, а "старший" индекс увеличить на 1. При этом далее в цикле проверяется переполение "старшего" индекса тем же алгоритмом.
-                //Таким образом [0, 0, 0, 61] станет [0, 0, 1, 0]. И поиск продолжится дальше:  [0, 0, 1, 1],  [0, 0, 1, 2],  [0, 0, 1, 3] и т.д.
-                for index in (0 ..< currentIndexArray.count).reversed() {
-                    guard currentIndexArray[index] < maxIndexArray - 1 else {
-                        currentIndexArray[index] = 0
-                        continue
+        
+        for operation in allOperation {
+//            operation.qualityOfService = .userInitiated
+            operation.completionBlock = {
+                if let result = operation.result {
+                    operationQueue.cancelAllOperations()
+                    OperationQueue.main.addOperation {
+                        self.stop(password: result, startTime: startTime)
                     }
-                    currentIndexArray[index] += 1
-                    break
+                } else if operation.isFinished == false {
+                    OperationQueue.main.addOperation {
+                        self.stop(password: "Error", startTime: startTime)
+                    }
                 }
             }
         }
-        return nil
     }
     
     //Обновляем UI

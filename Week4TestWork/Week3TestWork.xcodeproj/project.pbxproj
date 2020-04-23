@@ -16,6 +16,7 @@
 		9387B72D2090CF66007B9E0D /* Password generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9387B72C2090CF66007B9E0D /* Password generator.swift */; };
 		93CCDAAB209355B600B8876B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93CCDAAA209355B600B8876B /* Constants.swift */; };
 		93E3A6602091A87F00C4E6E7 /* PressStart2P.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93E3A65F2091A87F00C4E6E7 /* PressStart2P.ttf */; };
+		A25D8EBE244A62F50023C080 /* BruteForceOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25D8EBD244A62F50023C080 /* BruteForceOperations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		9387B72C2090CF66007B9E0D /* Password generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Password generator.swift"; sourceTree = "<group>"; };
 		93CCDAAA209355B600B8876B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		93E3A65F2091A87F00C4E6E7 /* PressStart2P.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PressStart2P.ttf; sourceTree = "<group>"; };
+		A25D8EBD244A62F50023C080 /* BruteForceOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForceOperations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				9387B7172090BBFC007B9E0D /* AppDelegate.swift */,
 				9387B7192090BBFC007B9E0D /* ViewController.swift */,
+				A25D8EBD244A62F50023C080 /* BruteForceOperations.swift */,
 				9387B71B2090BBFC007B9E0D /* Main.storyboard */,
 				9387B72C2090CF66007B9E0D /* Password generator.swift */,
 				9367CFD02092FCF600E9A359 /* Alert.swift */,
@@ -195,6 +198,7 @@
 			files = (
 				93CCDAAB209355B600B8876B /* Constants.swift in Sources */,
 				9387B71A2090BBFC007B9E0D /* ViewController.swift in Sources */,
+				A25D8EBE244A62F50023C080 /* BruteForceOperations.swift in Sources */,
 				9387B7182090BBFC007B9E0D /* AppDelegate.swift in Sources */,
 				9367CFD12092FCF600E9A359 /* Alert.swift in Sources */,
 				9387B72D2090CF66007B9E0D /* Password generator.swift in Sources */,
