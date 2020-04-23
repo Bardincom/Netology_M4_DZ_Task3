@@ -74,41 +74,23 @@ class ViewController: UIViewController {
         operationQueue.addOperations(allOperation, waitUntilFinished: false)
         
         allOperation.forEach { operation in
-            operation.completionBlock = {
             
-                    if let result = operation.result {
-                        print(result)
-                        operationQueue.cancelAllOperations()
-                        OperationQueue.main.addOperation {
-                            self.stop(password: result, startTime: startTime)
-                        }
-                    } else if operation.isCancelled == false {
-                        operationQueue.cancelAllOperations()
-                        OperationQueue.main.addOperation {
-                            self.stop(password: "Error", startTime: startTime)
-                        }
+            operation.completionBlock = {
+                if let result = operation.result {
+                    print(result)
+                    operationQueue.cancelAllOperations()
+                    OperationQueue.main.addOperation {
+                        self.stop(password: result, startTime: startTime)
+                    }
+                } else if operation.isCancelled == false {
+                    operationQueue.cancelAllOperations()
+                    OperationQueue.main.addOperation {
+                        self.stop(password: "Error", startTime: startTime)
                     }
                 }
+            }
         }
-//        for operation in allOperation {
-//
-//            operation.completionBlock = {
-//
-//                if let result = operation.result {
-//                    print(result)
-//                    operationQueue.cancelAllOperations()
-//                    OperationQueue.main.addOperation {
-//                        self.stop(password: result, startTime: startTime)
-//                    }
-//                } else if operation.isCancelled == false {
-//                    operationQueue.cancelAllOperations()
-//                    OperationQueue.main.addOperation {
-//                        self.stop(password: "Error", startTime: startTime)
-//                    }
-//                }
-//            }
-//        }
-}
+    }
     
     //Обновляем UI
     private func stop(password: String, startTime: Date) {
