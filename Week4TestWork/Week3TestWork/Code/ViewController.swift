@@ -73,25 +73,41 @@ class ViewController: UIViewController {
         let allOperation = [firstOperation, secondOperation, thirtOperation, fourthOperation]
         operationQueue.addOperations(allOperation, waitUntilFinished: false)
         
-        
-        for operation in allOperation {
-            
+        allOperation.forEach { operation in
             operation.completionBlock = {
-        
-                if let result = operation.result {
-                    print(result)
-                    operationQueue.cancelAllOperations()
-                    OperationQueue.main.addOperation {
-                        self.stop(password: result, startTime: startTime)
-                    }
-                } else if operation.isCancelled == false {
-                    operationQueue.cancelAllOperations()
-                    OperationQueue.main.addOperation {
-                        self.stop(password: "Error", startTime: startTime)
+            
+                    if let result = operation.result {
+                        print(result)
+                        operationQueue.cancelAllOperations()
+                        OperationQueue.main.addOperation {
+                            self.stop(password: result, startTime: startTime)
+                        }
+                    } else if operation.isCancelled == false {
+                        operationQueue.cancelAllOperations()
+                        OperationQueue.main.addOperation {
+                            self.stop(password: "Error", startTime: startTime)
+                        }
                     }
                 }
-            }
         }
+//        for operation in allOperation {
+//
+//            operation.completionBlock = {
+//
+//                if let result = operation.result {
+//                    print(result)
+//                    operationQueue.cancelAllOperations()
+//                    OperationQueue.main.addOperation {
+//                        self.stop(password: result, startTime: startTime)
+//                    }
+//                } else if operation.isCancelled == false {
+//                    operationQueue.cancelAllOperations()
+//                    OperationQueue.main.addOperation {
+//                        self.stop(password: "Error", startTime: startTime)
+//                    }
+//                }
+//            }
+//        }
 }
     
     //Обновляем UI
