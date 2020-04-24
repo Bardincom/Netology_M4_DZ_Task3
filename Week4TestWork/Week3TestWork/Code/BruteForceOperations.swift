@@ -64,14 +64,17 @@ class BruteForceOperations: Operation {
                 self.characterArray[currentIndexArray[1]] +
                 self.characterArray[currentIndexArray[2]] +
                 self.characterArray[currentIndexArray[3]]
-
+            
             // Выходим из цикла если пароль найден, или, если дошли до конца массива индексов
             if inputPassword == currentPass {
                 result = currentPass
-//                cancel()
             } else {
-                if currentIndexArray.elementsEqual(endIndexArray) {
-                    break
+                /// endIndexArray + [1] так как разбили массив символов на диапазон может
+                /// возникнуть ошибка 4го символа прибавляем 1 индекс компенсации
+                if currentIndexArray.elementsEqual(endIndexArray + [1]) {
+                    // если пароль не получилось подобрать
+                    result = "Error"
+                    cancel()
                 }
                 
                 for index in (0 ..< currentIndexArray.count).reversed() {

@@ -75,17 +75,11 @@ class ViewController: UIViewController {
         
         allOperation.forEach { operation in
             
-            operation.completionBlock = {
+            operation.completionBlock = { [weak self] in
                 if let result = operation.result {
-                    print(result)
                     operationQueue.cancelAllOperations()
                     OperationQueue.main.addOperation {
-                        self.stop(password: result, startTime: startTime)
-                    }
-                } else if operation.isCancelled == false {
-                    operationQueue.cancelAllOperations()
-                    OperationQueue.main.addOperation {
-                        self.stop(password: "Error", startTime: startTime)
+                        self?.stop(password: result, startTime: startTime)
                     }
                 }
             }
