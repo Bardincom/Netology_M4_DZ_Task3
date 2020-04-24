@@ -62,13 +62,9 @@ class ViewController: UIViewController {
         let operationQueue = OperationQueue()
         
         let firstOperation = BruteForceOperations(startString: "0000", endString: "eeee", password: password)
-        firstOperation.name = "FirstOperation"
         let secondOperation = BruteForceOperations(startString: "ffff", endString: "tttt", password: password)
-        secondOperation.name = "SecondOperation"
         let thirtOperation = BruteForceOperations(startString: "uuuu", endString: "IIII", password: password)
-        thirtOperation.name = "ThirtOperation"
         let fourthOperation = BruteForceOperations(startString: "JJJJ", endString: "ZZZZ", password: password)
-        fourthOperation.name = "FourthOperation"
         
         let allOperation = [firstOperation, secondOperation, thirtOperation, fourthOperation]
         operationQueue.addOperations(allOperation, waitUntilFinished: false)
